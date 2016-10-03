@@ -11,6 +11,16 @@
 |
 */
 
+$api = app('Dingo\Api\Routing\Router');
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+$api->version('v1', function ($api) {
+
+    $api->get('hello', function () {
+        return "It is ok";
+    });
+
 });
