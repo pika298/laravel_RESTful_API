@@ -20,5 +20,6 @@ Route::get('/', function () {
 $api->version('v1', function ($api) {
 
     $api->get('hello', 'App\Http\Controllers\HomeController@index');
+    $api->get('users/{user_id}/roles/{role_name}', 'App\Http\Controllers\HomeController@attachUserRole');
 
 });

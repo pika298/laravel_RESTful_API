@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\User;
+use App\Role;
 
 class HomeController extends Controller
 {
@@ -17,8 +18,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return User::get();
         //return "test from index";
+    }
+
+    public function attachUserRole($userId, $role)
+    {
+        $user = User::find($userId);
+
+        $roleId = Role::where('name', $role)->first();
+
+        $user->roles()->attach($roleId);
+
+        return $user;
     }
 
     /**
