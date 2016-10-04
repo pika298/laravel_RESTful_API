@@ -19,8 +19,6 @@ Route::get('/', function () {
 
 $api->version('v1', function ($api) {
 
-    $api->get('hello', function () {
-        return "It is ok";
-    });
+    $api->get('hello', 'App\Http\Controllers\HomeController@index');
 
 });
