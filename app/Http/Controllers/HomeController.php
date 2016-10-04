@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use App\User;
+
 class HomeController extends Controller
 {
     /**
@@ -15,7 +17,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return "Hello from index";
+        return User::all();
+        //return "test from index";
     }
 
     /**
