@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use App\User;
 use App\Role;
+use App\Permission;
 
 class HomeController extends Controller
 {
@@ -31,6 +32,47 @@ class HomeController extends Controller
         $user->roles()->attach($roleId);
 
         return $user;
+    }
+
+    public function getUserRole($userId)
+    {
+        return User::find($userId)->roles;
+    }
+
+    /**
+    * add Permission to a role
+    * @param Request $request
+    * @return mixed
+    */
+
+    public function attachPermission(Request $request)
+    {
+        $parameters = $request->only('permission', 'role');
+
+        $permissionParam = $parameters['permission'];
+        $roleParam = $parameters['role'];
+
+        $role = Role::where('name', $roleParam)->first();
+
+        $permission = Permission::where('name', $permissionParam)->first();
+
+        $role->attachPermission($permission);
+
+        //return $role->permissions;
+        return $this->response->created();
+    }
+
+    /**
+    * Get all permissions related to the role.
+    * @param $roleParam
+    * @return mixed
+    */
+    public function getPermissions($roleParam)
+    {
+        $role = Role::where('name', $roleParam)->first();
+
+       // return $role->perms;
+        return $this->response->array($role->perms);
     }
 
     /**
