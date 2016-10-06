@@ -26,4 +26,6 @@ $api->version('v1', function ($api) {
     $api->post('role/permission/add', 'App\Http\Controllers\HomeController@attachPermission');
     $api->get('role/permissions', 'App\Http\Controllers\HomeController@getPermissions');
 
+    $api->post('authenticate', 'App\Http\Controllers\Auth\AuthController@authenticate');
+
 });
