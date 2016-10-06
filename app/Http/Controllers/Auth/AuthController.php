@@ -69,6 +69,67 @@ class AuthController extends Controller
         // return response()->json(compact('token'));
     }
 
+    // fetch all users
+    public function index()
+    {
+        try {
+            return User::all();
+        }
+        catch (Exception $ex) {
+            return $ex;
+        }
+        
+    }
+
+    // fetch user detail based on id w/o authentication
+    public function show()
+    {
+        try {
+            return JWTAuth::parseToken()->toUser();
+
+            if (! $user) {
+                return $this->response->errorNotFound('User not found!');
+            }           
+        }
+        catch (\Tymon\JWTAuth\Exceptions\JWTException $ex) {
+            return $this->response->error('Something went wrong!');
+        }
+
+        return $this->response->array(compact('user'))->setStatusCode(200);
+    }
+
+    // refresh token
+    public function getToken()
+    {
+        $token = JWTAuth::getToken();
+
+        if (! $token) {
+            return $this->response->errorUnauthorized("Token is invalid!");
+        }
+
+        try {
+            $refreshedToken = JWTAuth::refresh($token);
+        } catch (JWTException $ex) {
+            $this->response->error('Something went wrong!');
+        }
+
+        return $this->response->array(compact('token'));
+    }
+
+    // delete user
+    public function destroy()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+
+        if (! $user) {
+            // fail the delete process
+
+        }
+
+        // if not go with the delete process
+
+        $user->delete();
+    }
 
     /**
      * Get a validator for an incoming registration request.

@@ -45,6 +45,19 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
+        if ($e instanceof ModeNotFoundException) {
+            $e = new ModeNotFoundException($e->getMessage(), $e);
+        } 
+
+        if ($e instanceof TokenExpiredException) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } else if ($e instanceof TokenInvalidException) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } else if ($e instanceof TokenBlacklistedException) {
+            return response()->json(['token is blacklisted'], $e->getStatusCode());
+        }
+
         return parent::render($request, $e);
     }
 }
