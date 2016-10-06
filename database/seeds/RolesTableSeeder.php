@@ -15,8 +15,8 @@ class RolesTableSeeder extends Seeder
         
         $owner = new Role();
         $owner->name = 'owner';
-        $owner->display_name = 'Product Owner'; // optional
-        $owner->description = 'Product owner is the owner of a given project'; // optional
+        $owner->display_name = 'Project Owner'; // optional
+        $owner->description = 'project owner is the owner of a given project'; // optional
         $owner->save();
         
 
@@ -25,5 +25,12 @@ class RolesTableSeeder extends Seeder
         $owner->display_name = 'Admin Owner'; // optional
         $owner->description = 'Admin owner is the owner of a given project'; // optional
         $owner->save();
+
+        $owner = new Role();
+        $owner->name = 'dbadmin';
+        $owner->display_name = 'Database Owner'; // optional
+        $owner->description = 'database owner is the owner of a given project'; // optional
+        $owner->save();
+        
     }
 }
