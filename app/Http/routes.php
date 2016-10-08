@@ -42,6 +42,7 @@ $api->version('v1', function ($api) {
         return Response::json(Authorizer::issueAccessToken());
     });
 
+
 });
 
 /*
@@ -54,6 +55,9 @@ $api->version('v1', ['middleware' => 'api.auth'], function ($api) {
     $api->get('user', 'App\Http\Controllers\Auth\AuthController@show');
     $api->get('token', 'App\Http\Controllers\Auth\AuthController@getToken');
     $api->post('delete', 'App\Http\Controllers\Auth\AuthController@destroy');
+
+    // OAuth validate token
+    $api->get('user/validate', 'App\Http\Controllers\UserController@validateUser');
 
 });
 
