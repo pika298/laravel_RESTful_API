@@ -11,11 +11,19 @@
 |
 */
 
-$api = app('Dingo\Api\Routing\Router');
-
 Route::get('/', function () {
     return view('welcome');
 });
+
+// use LucaDegasperi\OAuth2Server\Authorizer;
+
+$api = app('Dingo\Api\Routing\Router');
+
+/*
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
+});
+*/
 
 $api->version('v1', function ($api) {
 
@@ -27,6 +35,12 @@ $api->version('v1', function ($api) {
     $api->get('role/permissions', 'App\Http\Controllers\HomeController@getPermissions');
 
     $api->post('authenticate', 'App\Http\Controllers\Auth\AuthController@authenticate');
+
+    // OAuth access_token
+    $api->post('oauth/access_token', function() {
+         // return Authorizer::issueAccessToken();
+        return Response::json(Authorizer::issueAccessToken());
+    });
 
 });
 

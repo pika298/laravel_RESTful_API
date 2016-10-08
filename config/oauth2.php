@@ -30,8 +30,24 @@ return [
     'grant_types' => [
         'password' => [
             'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
-            'callback' => '\App\PasswordGrantVerifier@verify',
+            'callback' => '\App\Verifiers\PasswordGrantVerifier@verify',
             'access_token_ttl' => 2592000,
+
+             // the code to run in order to verify the user’s identity
+            /*
+             ‘callback’ => function($username, $password){
+             $credentials = [
+             ‘email’ => $username,
+             ‘password’ => $password,
+             ];
+             
+             if (Auth::once($credentials)) {
+             return Auth::user()->id;
+             } else {
+             return false;
+             }
+             }
+             */
         ],
         'refresh_token' => [
             'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
